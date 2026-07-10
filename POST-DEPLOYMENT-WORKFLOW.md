@@ -1,4 +1,4 @@
-# Post-Deployment Workflow: Rollback & Bugfix Strategy
+## Post-Deployment Workflow: Rollback & Bugfix Strategy
 
 > **zen-pharma-backend CI/CD Architecture**  
 > GitOps-based pipeline with immutable image promotion across DEV → QA → PROD  
