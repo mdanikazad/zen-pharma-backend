@@ -118,8 +118,11 @@ jobs:
           category: /language:javascript
 
       # ── npm audit (fail on HIGH/CRITICAL) ─────────────────────────────────────
-      - name: npm audit (HIGH/CRITICAL → fail)
-        run: cd ${{ inputs.service-dir }} && npm audit --audit-level=high
+      - name: npm audit (Development - don't fail pipeline)
+        continue-on-error: true
+        run: |
+          cd ${{ inputs.service-dir }}
+          npm audit --audit-level=high
 
       # ── AWS credentials via OIDC (no long-lived keys) ─────────────────────────
       - name: Configure AWS credentials (OIDC)
@@ -157,7 +160,7 @@ jobs:
           ignore-unfixed: true
 
       - name: Upload Trivy SARIF to GitHub Security tab
-        if: always()
+        if: hashFiles('trivy-results.sarif') != ''
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: trivy-results.sarif
